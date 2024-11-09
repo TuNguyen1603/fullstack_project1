@@ -51,8 +51,8 @@ router.get('/', function (req, res) {
     res.render('index', { images: images });
 });
 // Route to resize images
-router.get('/resize', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, height, width, thumbDir, resizedImagePath, err_1;
+router.get('/resize', function (req, response) { return __awaiter(void 0, void 0, void 0, function () {
+    var filename, height, width, thumbDir, resizedImagePath, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -61,20 +61,20 @@ router.get('/resize', function (req, res) { return __awaiter(void 0, void 0, voi
                 height = parseInt(req.query.height, 10);
                 width = parseInt(req.query.width, 10);
                 if (filename.length == 0) {
-                    res.status(400).send('Bad Request!');
-                    return [2 /*return*/];
+                    response.status(400).send('Bad Request!');
+                    return [2 /*return*/, response];
                 }
                 if (!width || !height) {
-                    res.status(400).send('Missing width or height!');
-                    return [2 /*return*/];
+                    response.status(400).send('Missing width or height!');
+                    return [2 /*return*/, response];
                 }
                 if (!Number(width) || Number(width) <= 0) {
-                    res.status(400).send('Invalid width!');
-                    return [2 /*return*/];
+                    response.status(400).send('Invalid width!');
+                    return [2 /*return*/, response];
                 }
                 if (!Number(height) || Number(height) <= 0) {
-                    res.status(400).send('Invalid height!');
-                    return [2 /*return*/];
+                    response.status(400).send('Invalid height!');
+                    return [2 /*return*/, response];
                 }
                 thumbDir = path_1.default.join(__dirname, '../images/thumb');
                 if (!!fs_1.default.existsSync(thumbDir)) return [3 /*break*/, 2];
@@ -88,18 +88,18 @@ router.get('/resize', function (req, res) { return __awaiter(void 0, void 0, voi
             case 3:
                 // Resize the image and save it in the thumb directory
                 _a.sent();
-                resizedImagePath = path_1.default.join(thumbDir, "".concat(path_1.default.parse(filename).name, "_thumb").concat(path_1.default.extname(filename)));
+                resizedImagePath = path_1.default.join(thumbDir, "".concat(path_1.default.parse(filename).name, "-").concat(height, "-").concat(width).concat(path_1.default.extname(filename)));
                 // Ensure the resized image exists
                 if (!fs_1.default.existsSync(resizedImagePath)) {
-                    res.status(400).send('Resized image not found');
-                    return [2 /*return*/];
+                    response.status(400).send('Resized image not found');
+                    return [2 /*return*/, response];
                 }
                 // Serve the resized image
-                res.sendFile(resizedImagePath);
+                response.sendFile(resizedImagePath);
                 return [3 /*break*/, 5];
             case 4:
-                err_1 = _a.sent();
-                res.status(500).send("Error");
+                error_1 = _a.sent();
+                response.status(500).send("error: " + error_1);
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }

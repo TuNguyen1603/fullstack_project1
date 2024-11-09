@@ -42,14 +42,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resize = void 0;
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
-var sharp = require('sharp');
+var sharp = require("sharp");
 var resize = function (filename, height, width) { return __awaiter(void 0, void 0, void 0, function () {
     var inputPath, outputPath, outputDir, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                inputPath = path_1.default.join(__dirname, '../images/full', filename);
-                outputPath = path_1.default.join(__dirname, '../images/thumb', "".concat(path_1.default.parse(filename).name, "_thumb").concat(path_1.default.extname(filename)));
+                inputPath = path_1.default.join(__dirname, "../images/full", filename);
+                outputPath = path_1.default.join(__dirname, "../images/thumb", "".concat(path_1.default.parse(filename).name, "-").concat(height, "-").concat(width).concat(path_1.default.extname(filename)));
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
@@ -58,9 +58,7 @@ var resize = function (filename, height, width) { return __awaiter(void 0, void 
                     fs_1.default.mkdirSync(outputDir, { recursive: true });
                 }
                 // Resize the image
-                return [4 /*yield*/, sharp(inputPath)
-                        .resize(width, height)
-                        .toFile(outputPath)];
+                return [4 /*yield*/, sharp(inputPath).resize(width, height).toFile(outputPath)];
             case 2:
                 // Resize the image
                 _a.sent();

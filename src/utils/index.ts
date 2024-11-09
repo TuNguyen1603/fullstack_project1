@@ -1,15 +1,19 @@
-import path from 'path';
-import fs from 'fs';
+import path from "path";
+import fs from "fs";
 
-const sharp = require('sharp');
+const sharp = require("sharp");
 
 export const resize = async (
   filename: string,
   height: number,
   width: number
 ): Promise<void> => {
-  const inputPath = path.join(__dirname, '../images/full', filename);
-  const outputPath = path.join(__dirname, '../images/thumb', `${path.parse(filename).name}_thumb${path.extname(filename)}`);
+  const inputPath = path.join(__dirname, "../images/full", filename);
+  const outputPath = path.join(
+    __dirname,
+    "../images/thumb",
+    `${path.parse(filename).name}-${height}-${width}${path.extname(filename)}`
+  );
 
   try {
     // Check if the output directory exists, if not, create it
@@ -19,9 +23,7 @@ export const resize = async (
     }
 
     // Resize the image
-    await sharp(inputPath)
-      .resize(width, height)
-      .toFile(outputPath);
+    await sharp(inputPath).resize(width, height).toFile(outputPath);
 
     console.log(`Image resized and saved to ${outputPath}`);
   } catch (err) {

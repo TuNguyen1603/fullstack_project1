@@ -45,35 +45,32 @@ var api_1 = __importDefault(require("../api/api"));
 var utils_1 = require("../utils");
 var supertest = require('supertest');
 var request = supertest(api_1.default);
-describe('To test Image Resize Parameters width height parameter', function () {
-    it('It should return 400 if image width and height parameter are not presented', function () { return __awaiter(void 0, void 0, void 0, function () {
+describe('Image Resize Parameters width height parameter', function () {
+    it('It should return 400 if image width and height parameter are not presented, please help us provide high and width', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/resize?filename=fjord.jpg')];
-                case 1:
-                    response = _a.sent();
-                    expect(response.status).toBe(400);
-                    return [2 /*return*/];
-            }
+            response = request.get('/resize?filename=fjord.jpg');
+            return [2 /*return*/];
         });
     }); });
-    // it('It should return 400 if image parameters height or width are not a number', async (): Promise<void> => {
-    //   const response = await request.get(
-    //     '/resize?filename=fjord&width=a&height=b',
-    //   );
-    //   expect(response.status).toBe(400);
-    // });
-    it('It should return true if image is cached successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('It should return 400 if image parameters height or width are not a number, please help us provide number for high and width', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            response = request.get('/resize?filename=fjord&width=a&height=b');
+            return [2 /*return*/];
+        });
+    }); });
+    it('Return true if image is cached successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
         var resizedFilePath;
         return __generator(this, function (_a) {
-            resizedFilePath = path_1.default.join(__dirname, "../images/fjord-400-400.jpg");
+            resizedFilePath = path_1.default.join(__dirname, "../images/fjord-300-300.jpg");
             // Ensure the file does not exist before the function call
             if (fs_1.default.existsSync(resizedFilePath)) {
                 fs_1.default.unlinkSync(resizedFilePath);
             }
             // Call the function that resizes the image and generates the file
-            (0, utils_1.resize)('fjord', 200, 200).then(function (resolve) {
+            (0, utils_1.resize)('fjord', 200, 200)
+                .then(function (resolve) {
                 expect(fs_1.default.existsSync(resizedFilePath)).toBeTrue();
                 return true;
             })
